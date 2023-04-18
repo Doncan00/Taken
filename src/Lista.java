@@ -1,10 +1,15 @@
+import java.awt.Color;
+
+import javax.swing.JButton;
+import javax.swing.JPanel;
+
 public class Lista {
 	Nodo   Head, P, Q, R, Z;
 	private int renglones, columnas;
 	String ganador = "";
 	private int cont=0,cont2=0;
 	
-	public int[][] matriz = new int[4][4];
+	public int[][] MatrizLista = new int[4][4];
 
 	public Lista(int renglones, int columnas)
 	{
@@ -15,15 +20,12 @@ public class Lista {
 	
 	public void ColocarValores(int i, int j) {
 		if(cont < 4) {			
-				matriz[cont2][cont] = (i*4)+j+1;
-				System.out.println(matriz[cont2][cont]+"-");
+				MatrizLista[cont2][cont] = (i*4)+j+1;
 				cont++;
 		}else {
-			System.out.println("");
 			cont2++;
 			cont = 0;
-			matriz[cont2][cont] = (i*4)+j+1;
-			System.out.println(matriz[cont2][cont]+"-");
+			MatrizLista[cont2][cont] = (i*4)+j+1;
 			cont++;
 		}
 	}
@@ -32,8 +34,7 @@ public class Lista {
 		for (int X = 1; X <= renglones; X++){
 			for (int Y = 1; Y <= columnas; Y++){
 				P = new Nodo();
-				P.dato = matriz[X-1][Y-1];
-				System.out.print(P.dato+"- ");
+				P.dato = MatrizLista[X-1][Y-1];
 				
 				if (Y == 1){
 					if (Head == null){
@@ -69,6 +70,7 @@ public class Lista {
 				P = Q;
 				while(P != null)//columna
 				{
+					
 					System.out.print(P.dato+" - ");
 					P = P.Derecha;
 				}
@@ -79,7 +81,7 @@ public class Lista {
 		}
 	}
 	
-	public void buscarEspacio() {
+	public void buscarEspacio(JButton boton, JButton[][] Matriz ,JPanel panel) {
 		int cont =0;
 		if (Head != null){
 			Q = Head;
@@ -89,11 +91,67 @@ public class Lista {
 				while(P != null && cont ==0)//columna
 				{
 					if (P.dato == 16) {
-						System.out.println("HOLA");
+						int i=Integer.parseInt(boton.getText()); 
+						if (P.Arriba != null) {							
+						if (P.Arriba.dato == i) {
+							Q = P;
+							Q.dato = P.dato;
+							P = P.Arriba;
+							P.dato = i;
+							}
+						}
+						if (P.Abajo != null) {							
+							if (P.Abajo.dato == i) {
+								Q = P;
+								Q.dato = P.dato;
+								P = P.Arriba;
+								P.dato = i;
+								}
+							}
+						if (P.Izquierda != null) {							
+							if (P.Izquierda.dato == i) {
+								Q = P;
+								Q.dato = P.dato;
+								P = P.Arriba;
+								P.dato = i;
+								}
+							}
+						if (P.Derecha != null) {							
+							if (P.Derecha.dato == i) {
+								Q = P;
+								Q.dato = P.dato;
+								P = P.Arriba;
+								P.dato = i;
+								}
+							}
+						reacomodarFichas(Matriz, panel);
 						cont++;
-					}else {
-					}
-					System.out.print(P.dato);
+						}
+					P = P.Derecha;
+				}
+				Q = Q.Abajo;
+			}
+		}
+	}
+	
+	public void reacomodarFichas(JButton[][] Matriz ,JPanel panel) {
+		int aux = 0,aux2=0;
+		if (Head != null){
+			Q = Head;
+			while( Q != null)//renglon
+			{
+				P = Q;
+				while(P != null)//columna
+				{
+					for (int i = 0; i < 4; i++) {
+			            for (int j = 0; j < 4; j++) {
+			            	//int mat=Integer.parseInt(Matriz[i][j].getText());
+			            	System.out.println(Matriz[i][j].getText());
+			            	/*if (MatrizLista[aux][aux2] == mat)  {
+			            		panel.add(Matriz[i][j]);
+			            	}*/
+			            }
+			        }
 					P = P.Derecha;
 				}
 				Q = Q.Abajo;
@@ -102,7 +160,6 @@ public class Lista {
 			System.out.print("\n");
 		}
 	}
-	
 	
 	public void comprobarEmpate () {
 		int cont =0;
