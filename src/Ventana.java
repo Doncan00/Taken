@@ -57,14 +57,18 @@ public class Ventana extends JFrame{
 		borderArr.setForeground(Color.black);
 		borderArr.setBackground(Color.black);
 		borderArr.setFont(new Font("Open sans", Font.BOLD,25));
-		principal.add(borderArr,BorderLayout.SOUTH);
-		JLabel borderAba = new JLabel("HOLA");
-		borderAba.setOpaque(true);
-		borderAba.setForeground(Color.black);
-		borderAba.setBackground(Color.black);
-		borderAba.setFont(new Font("Open sans", Font.BOLD,25));
-		principal.add(borderAba,BorderLayout.NORTH);
+		principal.add(borderArr,BorderLayout.NORTH);
 		
+		JPanel botones = new JPanel ();
+		botones.setBackground(Color.black);
+		principal.add(botones,BorderLayout.SOUTH);
+		JButton btn1 = new JButton("REINICIAR");
+		btn1.setBackground(Color.gray);
+		botones.add(btn1);
+		
+		JButton btn2 = new JButton("BOTON PARA GANAR");
+		btn2.setBackground(Color.gray);
+		botones.add(btn2);
 		
 		JPanel fondo = new JPanel();
 		fondo.setBounds(640,480,0,0);
@@ -72,6 +76,28 @@ public class Ventana extends JFrame{
 		fondo.setBackground(Color.magenta);
 		fondo.setLayout(new GridLayout(4,4,2,2));
 		principal.add(fondo,BorderLayout.CENTER);
+		
+		btn1.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				desordenar(fondo);
+				revalidate();
+			}
+		});
+		
+		btn2.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				
+				lista.colocarGanador();
+				lista.colocarValores();
+				lista.repintarMovimiento(Matriz);
+				repintar(fondo);
+			}
+		});
+		
 		
 		for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
@@ -88,7 +114,6 @@ public class Ventana extends JFrame{
         boton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evento) {
-                System.out.println(x+"-"+y);
                 lista.reinicioContadores();
                 lista.desplegarLista();
                 lista.moverFicha(Matriz[x][y],Matriz);
@@ -107,9 +132,7 @@ public class Ventana extends JFrame{
             Matriz[i][j].setVisible(true);
             Matriz[i][j].setBackground(Color.cyan);
             Matriz[i][j].setEnabled(true);
-            System.out.println(Matriz[i][j].getText());
             fondo.add(Matriz[i][j]);
-            System.out.println(Matriz[i][j].getText()+"AKFBKAUBJF");
             if (contGlobal ==0){
             	lista.ColocarValores(Matriz[i][j]);  
             }
@@ -126,6 +149,7 @@ public class Ventana extends JFrame{
 		}
 		revalidate();
 		repaint();
+		lista.comprobarGanador();
 	}
 	
 	//DESORDENAR JAJAJA 
@@ -152,12 +176,13 @@ public class Ventana extends JFrame{
 				Matriz[n1][n2].setText(""+(cont+1));
 				fondo.add(Matriz[n1][n2]);
 				cont++;
-				//System.out.println("CONT "+cont);
+				//ok.out.println("CONT "+cont);
 							}
 					 }
 				}
 				
 				} while (cont <16);
+			lista.colocarValores2(Matriz);
 			lista.CrearLista();
 		}catch (Exception e){
 			

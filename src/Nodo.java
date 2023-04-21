@@ -1,3 +1,5 @@
+import javax.swing.JOptionPane;
+
 public class Nodo {
 	int dato;
 	Nodo Arriba, Abajo, Derecha, Izquierda;
