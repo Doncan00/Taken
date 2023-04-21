@@ -23,14 +23,11 @@ public class Lista{
 	public void ColocarValores(JButton boton) {
 		if(cont < 4) {
 			matriz[cont2][cont] = boton.getText();
-			System.out.println(matriz[cont2][cont]);
 			cont++;
 	}else {
-		System.out.println("");
 		cont2++;
 		cont = 0;
 		matriz[cont2][cont] = boton.getText();
-		System.out.println(matriz[cont2][cont]+"-");
 		cont++;
 	}
 	}
@@ -41,7 +38,6 @@ public class Lista{
 				P = new Nodo();
 				int s = Integer.parseInt(matriz[X-1][Y-1]);
 				P.dato = s;
-				System.out.print(P.dato+"- ");
 				if (Y == 1){
 					if (Head == null){
 						Head = P;
@@ -76,24 +72,20 @@ public class Lista{
 				P = Q;
 				while(P != null)//columna
 				{
-					//System.out.print(P.dato+" - ");
+					//ok.out.print(P.dato+" - ");
 					P = P.Derecha;
 				}
 				Q = Q.Abajo;
-				System.out.print("\n");
 			}
-			System.out.print("\n");
 		}
 	}
 	
 	public void repintarMovimiento(JButton Matriz[][]) {
 		for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
-            	System.out.println(matriz[i][j]+"hole");
 				Matriz[i][j].setText(matriz[i][j]);
 				Ventana.setValorMatriz(matriz, i, j);
             	}
-            System.out.println();
             }
 	}
 	
@@ -166,7 +158,6 @@ public class Lista{
 					s=Integer.toString(P.dato); 
 					if (i <= 3 && j <= 3) {
 						matriz[i][j] = s;						
-						System.out.println(matriz[i][j]+"kytwe");
 					}
 					P = P.Derecha;
 					j++;
@@ -174,9 +165,7 @@ public class Lista{
 				j=0;
 				i++;
 				Q = Q.Abajo;
-				System.out.print("\n");
 			}
-			System.out.print("\n");
 		}
 	}
 	
@@ -194,7 +183,6 @@ public class Lista{
 						matriz[i][j] = Matriz[i][j].getText();	
 						s=Integer.parseInt(matriz[i][j]); 
 						P.dato = s;
-						System.out.println(matriz[i][j]+"kytwe");
 					}
 					P = P.Derecha;
 					j++;
@@ -202,9 +190,7 @@ public class Lista{
 				j=0;
 				i++;
 				Q = Q.Abajo;
-				System.out.print("\n");
 			}
-			System.out.print("\n");
 		}
 	}
 	
@@ -227,13 +213,11 @@ public class Lista{
 				Q = Q.Abajo;
 			}
 		}
-		System.out.println("contt :"+contt);
 		if (contt == 16) {
 			JOptionPane.showMessageDialog(null, "GANADOR");
 		}
 		if (contt > 16) {
 			contt -= contt;
-			System.out.println(contt);
 		}
 	}
 

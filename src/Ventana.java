@@ -20,7 +20,7 @@ public class Ventana extends JFrame{
 	public static JButton[][] Matriz = new JButton[4][4];
 	int [] numeros = new int[20];
 	
-	int contGlobal=0;
+	int contGlobal=0,contLista=0;
 	
 	Lista lista = new Lista(4,4);
 	
@@ -183,7 +183,6 @@ public class Ventana extends JFrame{
 				
 				} while (cont <16);
 			lista.colocarValores2(Matriz);
-			lista.CrearLista();
 		}catch (Exception e){
 			
 		}
