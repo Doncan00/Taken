@@ -17,7 +17,10 @@ import javax.swing.JPanel;
 public class Ventana extends JFrame{
 	
 	public Random rand = new Random();
-	public JButton[][] Matriz = new JButton[4][4];
+	public static JButton[][] Matriz = new JButton[4][4];
+	int [] numeros = new int[20];
+	
+	int contGlobal=0;
 	
 	Lista lista = new Lista(4,4);
 	
@@ -70,69 +73,122 @@ public class Ventana extends JFrame{
 		fondo.setLayout(new GridLayout(4,4,2,2));
 		principal.add(fondo,BorderLayout.CENTER);
 		
-		
-		Matriz[3][3] = new JButton ("");
-	    Matriz[3][3].setEnabled(false);
-	       fondo.add(Matriz[3][3]);
 		for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
-            	if (i != 3 || j != 3) {
                 Matriz[i][j] = new JButton(""+(i*4+j+1));
-                agregarAccion(Matriz[i][j],i,j,Matriz,fondo);
+                agregarAccion(Matriz[i][j],i,j,fondo);
                 fondo.add(Matriz[i][j]);
-            	}
             }
 		}
 		
 		desordenar(fondo);
 	}
 	
-	void agregarAccion(final JButton boton, final int x, final int y,JButton[][] Matriz , JPanel panel) {
+	void agregarAccion(final JButton boton, final int x, final int y,JPanel fondo) {
         boton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evento) {
-                lista.buscarEspacio(boton,Matriz,panel);
+                System.out.println(x+"-"+y);
+                lista.reinicioContadores();
                 lista.desplegarLista();
-                
+                lista.moverFicha(Matriz[x][y],Matriz);
+                repintar(fondo);
             }
 
 
         });
         
     }
-	
-	public void ordenar(JButton[][] Matriz , JPanel panel) {
-		lista.reacomodarFichas(Matriz,panel);
+	//Repintar
+	public void repintar (JPanel fondo) {
+		fondo.removeAll();
+		for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+            Matriz[i][j].setVisible(true);
+            Matriz[i][j].setBackground(Color.cyan);
+            Matriz[i][j].setEnabled(true);
+            System.out.println(Matriz[i][j].getText());
+            fondo.add(Matriz[i][j]);
+            System.out.println(Matriz[i][j].getText()+"AKFBKAUBJF");
+            if (contGlobal ==0){
+            	lista.ColocarValores(Matriz[i][j]);  
+            }
+            if (Matriz[i][j].getText().equals("16")) {
+            	Matriz[i][j].setBackground(Color.white);
+            	Matriz[i][j].setVisible(false);
+            	Matriz[i][j].setEnabled(false);
+            }
+            }
+        }
+		if (contGlobal ==0){
+			lista.CrearLista();
+			contGlobal++;
+		}
+		revalidate();
+		repaint();
 	}
 	
 	//DESORDENAR JAJAJA 
 	public void desordenar(JPanel fondo) {
-		int cont = 0;
+		int cont = 0,ii=0,jj=0;
 		fondo.removeAll();
 		for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
+            	numeros[i*4+j] = 0;
             	Matriz[i][j].setBackground(Color.black);
             }	
         }
+		//lista.reinicioContadores();
 		try {
-			do {				
-			int n1 = rand.nextInt(4);
-			int n2 = rand.nextInt(4);
-			if (Matriz[n1][n2].getBackground().equals(Color.black)) {
-			Matriz[n1][n2].setBackground(Color.CYAN);
-			lista.ColocarValores(n1, n2);
-			fondo.add(Matriz[n1][n2]);
-			cont++;
-			//System.out.println("CONT "+cont);
-			}
-			
-			} while (cont <16);
+			do {		
+				for (int i=0;i<4;i++) {
+					 for (int j = 0; j < 4; j++) {
+						 
+				int n1 = rand.nextInt(4);
+				int n2 = rand.nextInt(4);
+				int num = n1*4+n2+1;
+				if (Matriz[n1][n2].getBackground().equals(Color.black)) {
+				Matriz[n1][n2].setBackground(Color.CYAN);
+				Matriz[n1][n2].setText(""+(cont+1));
+				fondo.add(Matriz[n1][n2]);
+				cont++;
+				//System.out.println("CONT "+cont);
+							}
+					 }
+				}
+				
+				} while (cont <16);
 			lista.CrearLista();
 		}catch (Exception e){
 			
 		}
-		
-		Matriz[3][3].setBackground(Color.white);
-		fondo.revalidate();
+		this.repintar(fondo);
+		repaint();
+		revalidate();
 	}
+	 public boolean buscarNumero(int numero) {
+		 int cont=0;
+	        for (int i = 0; i < numeros.length; i++) {
+	            if (this.numeros[i] != numero) {
+	            	cont++;
+	            	if (cont == numeros.length-1) {
+	            		this.numeros[i] = numero;
+	            		return true;
+	            	}
+	            }
+	        }
+	        return false;
+	    }
+
+	 public JButton[][] getMatriz() {
+			return Matriz;
+		}
+
+		public static void setValorMatriz(String[][] matriz,int i,int j) {
+			Matriz[i][j].setText(matriz[i][j]);
+		}
+
+
+
+
 }
