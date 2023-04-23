@@ -20,6 +20,9 @@ public class Ventana extends JFrame{
 	public static JButton[][] Matriz = new JButton[4][4];
 	int [] numeros = new int[20];
 	
+	JLabel jl1 = new JLabel();
+	JPanel fondoContador = new JPanel();
+	
 	int contGlobal=0,contLista=0;
 	
 	Lista lista = new Lista(4,4);
@@ -28,19 +31,25 @@ public class Ventana extends JFrame{
 		
 		this.setVisible(true);
 		this.setTitle("Hola Zumayaaaaaa");
-		this.setSize(640,480);
+		this.setSize(720,480);
 		this.setResizable(true);
 		//this.setLayout(null);
 		this.setLocationRelativeTo(null);
 		
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+		fondoContador.setBounds(720,480,0,0);
+		fondoContador.setVisible(true);
+		fondoContador.setBackground(Color.black);
+		fondoContador.setLayout(new BorderLayout());
+		this.add(fondoContador);
+		
 		JPanel principal = new JPanel();
 		principal.setBounds(640,480,0,0);
 		principal.setVisible(true);
 		principal.setBackground(Color.white);
 		principal.setLayout(new BorderLayout());
-		this.add(principal);
+		fondoContador.add(principal);
 		
 		JLabel borderIzq = new JLabel("HOLA");
 		borderIzq.setOpaque(true);
@@ -110,6 +119,8 @@ public class Ventana extends JFrame{
 		desordenar(fondo);
 	}
 	
+	
+	
 	void agregarAccion(final JButton boton, final int x, final int y,JPanel fondo) {
         boton.addActionListener(new ActionListener() {
             @Override
@@ -130,7 +141,17 @@ public class Ventana extends JFrame{
 		for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
             Matriz[i][j].setVisible(true);
-            Matriz[i][j].setBackground(Color.cyan);
+            if (Matriz[i][j].getText().equals("2") || 
+            	Matriz[i][j].getText().equals("4") ||
+            	Matriz[i][j].getText().equals("6") ||
+            	Matriz[i][j].getText().equals("8") ||
+            	Matriz[i][j].getText().equals("10") || 
+            	Matriz[i][j].getText().equals("12") ||
+            	Matriz[i][j].getText().equals("14")) {
+            	Matriz[i][j].setBackground(Color.blue);
+            }else {
+            	Matriz[i][j].setBackground(Color.cyan);            	
+            }
             Matriz[i][j].setEnabled(true);
             fondo.add(Matriz[i][j]);
             if (contGlobal ==0){
@@ -147,9 +168,16 @@ public class Ventana extends JFrame{
 			lista.CrearLista();
 			contGlobal++;
 		}
+		lista.comprobarGanador();
+		
+		jl1.setText("    Correctas: "+lista.getContt()+"           ");
+		jl1.setForeground(Color.white);
+		jl1.setFont(new Font("Open sans", Font.BOLD,25));
+		jl1.setBackground(Color.black);
+		fondoContador.add(jl1, BorderLayout.EAST);
+		
 		revalidate();
 		repaint();
-		lista.comprobarGanador();
 	}
 	
 	//DESORDENAR JAJAJA 
@@ -174,6 +202,7 @@ public class Ventana extends JFrame{
 				if (Matriz[n1][n2].getBackground().equals(Color.black)) {
 				Matriz[n1][n2].setBackground(Color.CYAN);
 				Matriz[n1][n2].setText(""+(cont+1));
+				Matriz[n1][n2].setFont(new Font("Open sans", Font.BOLD,40));
 				fondo.add(Matriz[n1][n2]);
 				cont++;
 				//ok.out.println("CONT "+cont);

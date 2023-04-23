@@ -5,8 +5,8 @@ public class Lista{
 	Nodo   Head, P, Q, R, Z;
 	private int renglones, columnas;
 	String ganador = "";
-	private int cont=0,cont2=0;
-	
+	private int cont=0,cont2=0,contt=0;
+
 	public String[][] matriz = new String[4][4];
 
 	public Lista(int renglones, int columnas)
@@ -196,7 +196,7 @@ public class Lista{
 	
 	public void comprobarGanador(){
 		int i=1;
-		int contt=0;
+		contt=0;
 		if (Head != null){
 			Q = Head;
 			while( Q != null)//renglon
@@ -237,5 +237,13 @@ public class Lista{
 				Q = Q.Abajo;
 			}
 		}
+	}
+	
+	public int getContt() {
+		return contt;
+	}
+
+	public void setContt(int contt) {
+		this.contt = contt;
 	}
 }
